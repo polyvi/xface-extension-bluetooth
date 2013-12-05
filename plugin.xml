@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.polyvi.xface.extension.bluetooth"
+    version="1.0.0">
+    <name>Bluetooth</name>
+    <description>xFace Bluetooth Extension</description>
+    <license>GPLv3</license>
+    <keywords>cordova, xface, bluetooth</keywords>
+
+    <js-module src="www/bluetooth.js" name="bluetooth">
+        <clobbers target="navigator.bluetooth" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Bluetooth">
+                <param name="android-package" value="com.polyvi.xface.extension.bluetooth.XBluetoothExt"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.BLUETOOTH"/>
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+        </config-file>
+
+        <source-file src="src/android/XBluetoothExt.java" target-dir="src/com/polyvi/xface/extension/bluetooth"/>
+    </platform>
+</plugin>

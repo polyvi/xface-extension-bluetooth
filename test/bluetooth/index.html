@@ -1,0 +1,209 @@
+﻿<!--
+
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no,maximum-scale=1.0,initial-scale=1.0" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"> <!-- ISO-8859-1 -->
+    <title>Bluetooth Spec test</title>
+    <link rel="stylesheet" href="../master.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <script type="text/javascript" charset="utf-8" src="../base.js"></script>
+
+
+<script type="text/javascript" charset="utf-8">
+
+    var deviceReady = false;
+    /**
+     * Function called when page has finished loading.
+     */
+    function init() {
+        document.addEventListener("deviceready", function() {
+                deviceReady = true;
+            }, false);
+        window.setTimeout(function() {
+            if (!deviceReady) {
+                alert("Error: xFace did not initialize.  Demo will not run correctly.");
+            }
+        },1000);
+    }
+
+    function win() {
+        // 在inner html页面中显示结果
+        document.getElementById('result').innerText = "success";
+    }
+
+    function fail() {
+        document.getElementById('result').innerText = "fail";
+    }
+
+    function openBluetooth(){
+        resetResultElement();
+        document.getElementById('status').innerText = "openBluetooth";
+        navigator.bluetooth.enable(win,fail);
+    }
+
+    function closeBluetooth(){
+        resetResultElement();
+        document.getElementById('status').innerText = "closeBluetooth";
+        navigator.bluetooth.disable(win,fail);
+    }
+
+    function isBluetoothEnabled(){
+        resetResultElement();
+        document.getElementById('status').innerText = "isBluetoothEnabled";
+        function win(result) {
+            // 在inner html页面中显示结果
+            document.getElementById('result').innerText = result;
+        }
+        navigator.bluetooth.isBTEnabled(win,fail);
+    }
+
+    function listBluetoothDevices(){
+        resetResultElement();
+        document.getElementById('status').innerText = "listBluetoothDevices";
+        function listWin(result) {
+            var data = "";
+            for(var i =0;i<result.length;i++){
+                var jsonobj = result[i];
+                for(var x in jsonobj){
+                    data += x+"="+jsonobj[x]+"\n";
+                }
+            }
+            document.getElementById('result').innerText = data;
+        }
+        navigator.bluetooth.listDevices(listWin,fail);
+    }
+
+    function listBoundBluetoothDevices(){
+        resetResultElement();
+        document.getElementById('status').innerText = "listBoundBluetoothDevices";
+        function win(result) {
+            var data = "";
+            for(var i =0;i<result.length;i++){
+                var jsonobj = result[i];
+                for(var x in jsonobj){
+                    data += x+"="+jsonobj[x]+"\n";
+                }
+            }
+            document.getElementById('result').innerText = data;
+        }
+
+        function fail() {
+            document.getElementById('result').innerText = "failed";
+        }
+        navigator.bluetooth.listBoundDevices(win,fail);
+    }
+
+    function pairedByMacAddress(){
+        resetResultElement();
+        document.getElementById('status').innerText = "pairedByMacAddress";
+        function win(result) {
+            document.getElementById('result').innerText = result;
+        }
+
+        function fail() {
+            document.getElementById('result').innerText = "failed";
+        }
+        var macAddress = document.querySelector("#macAddress").value;
+        navigator.Bluetooth.pairBT(macAddress,win,fail);
+    }
+
+    function unPairedByMacAddress(){
+        resetResultElement();
+        document.getElementById('status').innerText = "unPairedByMacAddress";
+        function win(result) {
+            document.getElementById('result').innerText = result;
+        }
+
+        function fail() {
+            document.getElementById('result').innerText = "failed";
+        }
+        var macAddress = document.querySelector("#macAddress").value;
+        navigator.bluetooth.unPairBT(macAddress,win,fail);
+    }
+
+    function isMacAddressBound(){
+        resetResultElement();
+        document.getElementById('status').innerText = "isMacAddressBound";
+        function win(result) {
+            document.getElementById('result').innerText = result;
+        }
+        function fail() {
+            document.getElementById('result').innerText = "failed";
+        }
+        var macAddress = document.querySelector("#macAddress").value;
+        navigator.bluetooth.isBound(macAddress,win,fail);
+    }
+
+    function stopDiscovering(){
+        resetResultElement();
+        document.getElementById('status').innerText = "stopDiscovering";
+        function win(result) {
+            document.getElementById('result').innerText = result;
+        }
+        function fail() {
+            document.getElementById('result').innerText = "failed";
+        }
+        navigator.bluetooth.stopDiscovering(win,fail);
+    }
+
+    function resetResultElement()
+    {
+        document.getElementById('result').innerText = "";
+    }
+
+</script>
+
+  </head>
+  <body onload="init();" id="stage" class="theme">
+
+    <h1>Bluetooth <span id="showInfo">?</span></h1>
+    <div id="descr">
+        测试说明: <br/>
+        用户应该测试以下情况: <br/>
+        1.通过bluetooth扩展打开/关闭bluetooth<br/>
+        2.根据指定的mac地址来绑定和解绑定 <br/>
+        3.列出搜索到的蓝牙设备<br/>
+        4.列出已经配对的蓝牙设备<br/>
+    </div>
+    <div id="info">
+        status: <span id="status"></span><br/>
+        result: <span id="result"></span><br/><br/>
+
+    </div>
+    <div id="address">
+        macAddress:<input type="text" name="macAddress" id="macAddress" />
+    </div>
+    <h2>Action</h2>
+    <div class="btn large" data-platform="android" onclick="openBluetooth();">openBluetooth</div>
+    <div class="btn large" data-platform="android" onclick="closeBluetooth();">closeBluetooth</div>
+    <div class="btn large" data-platform="android" onclick="isBluetoothEnabled();">isBluetoothEnabled</div>
+    <div class="btn large" data-platform="android" onclick="listBluetoothDevices();">listBluetoothDevices</div>
+    <div class="btn large" data-platform="android" onclick="listBoundBluetoothDevices();">listBoundBluetoothDevices</div>
+    <div class="btn large" data-platform="android" onclick="pairedByMacAddress();">pairedByMacAddress</div>
+    <div class="btn large" data-platform="android" onclick="unPairedByMacAddress();">unPairedByMacAddress</div>
+    <div class="btn large" data-platform="android" onclick="isMacAddressBound();">isMacAddressBound</div>
+    <div class="btn large" data-platform="android" onclick="stopDiscovering();">stopDiscovering</div>
+    <h2> </h2><div class="backBtn" onclick="backHome();">Back</div>
+  </body>
+</html>
+
