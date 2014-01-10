@@ -21,3 +21,6 @@
 -->
 
 # Release Notes
+### 1.0.0 Fri Jan 10 2014 17:08:02 GMT+0800 (CST)
+ *  added releasenotes
+ *  [android]Added xface-extension-bluetooth
