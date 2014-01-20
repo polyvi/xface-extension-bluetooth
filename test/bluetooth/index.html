@@ -124,7 +124,7 @@
             document.getElementById('result').innerText = "failed";
         }
         var macAddress = document.querySelector("#macAddress").value;
-        navigator.Bluetooth.pairBT(macAddress,win,fail);
+        navigator.bluetooth.pairBT(macAddress,win,fail);
     }
 
     function unPairedByMacAddress(){
