@@ -24,3 +24,8 @@
 ### 1.0.0 Fri Jan 10 2014 17:08:02 GMT+0800 (CST)
  *  added releasenotes
  *  [android]Added xface-extension-bluetooth
+### 1.0.1 Mon Jan 27 2014 15:57:15 GMT+0800 (CST)
+ *  batch modify .reviewboard
+ *  fix bug:polyvi/xface-extension-bluetooth#2: 使用macAddress去配对失败
+ *  polyvi/xface-mobile-spec#4:Filtered out unsupported platforms.
+ *  Incremented plugin version on dev branch to 1.0.1-dev
