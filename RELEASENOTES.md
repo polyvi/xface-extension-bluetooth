@@ -29,3 +29,9 @@
  *  fix bug:polyvi/xface-extension-bluetooth#2: 使用macAddress去配对失败
  *  polyvi/xface-mobile-spec#4:Filtered out unsupported platforms.
  *  Incremented plugin version on dev branch to 1.0.1-dev
+
+## 1.0.2 (Wed May 07 2014)
+
+
+ *  Modify config.xml path error in plugin.xml
+ *  Incremented plugin version on dev branch to 1.0.2-dev
